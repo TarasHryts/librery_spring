@@ -5,6 +5,7 @@ import java.util.List;
 import mate.academy.spring.config.AppConfig;
 import mate.academy.spring.entity.Author;
 import mate.academy.spring.entity.Book;
+import mate.academy.spring.entity.Rent;
 import mate.academy.spring.entity.User;
 import mate.academy.spring.service.AuthorService;
 import mate.academy.spring.service.BookService;
@@ -18,17 +19,17 @@ public class MainApp {
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
         AuthorService authorService = context.getBean(AuthorService.class);
-        Author authorTemp = new Author("Some", "One");
-        authorService.add(authorTemp);
+        Author tarasShevchenko = new Author("Taras", "Shevchenko");
+        authorService.add(tarasShevchenko);
         RentService rentService = context.getBean(RentService.class);
         rentService.rentBook(new User("Sunil", "Bora", "suni.bora@example.com"),
-                new Book("Some book1", 2018, 2.6));
+                new Book("Inland: A Novel", 2019, 25.6));
         BookService bookService = context.getBean(BookService.class);
-        Book bookTemp = new Book("Some book1", 2018, 2.6);
-        bookService.add(bookTemp);
-        bookService.add(new Book("Some book2", 2017, 12.16));
-        bookService.add(new Book("Some book10", 2019, 22.26));
-        bookService.add(new Book("Some book4", 2020, 32.56));
+        Book daisyJonesBook = new Book("Daisy Jones & The Six", 2019, 41.6);
+        bookService.add(daisyJonesBook);
+        bookService.add(new Book("Daisy Jones & The Six", 2019, 35.16));
+        bookService.add(new Book("The Water Cure: A Novel", 2019, 52.26));
+        bookService.add(new Book("My Lovely Wife", 2019, 32.56));
         User userTemp = new User("Sunil", "Bora", "suni.bora@example.com");
         UserService userService = context.getBean(UserService.class);
         userService.add(userTemp);
@@ -51,12 +52,32 @@ public class MainApp {
             System.out.println("Email = " + user.getEmail());
             System.out.println();
         }
-        authorService.findByName(authorTemp.getName());
-        authorService.findByNameAndSurname(authorTemp.getName(), authorTemp.getSurname());
-        bookService.findByTitle(bookTemp.getTitle());
-        rentService.rentBook(userTemp, bookTemp);
-        rentService.getBooksRentByUser(userTemp);
-        rentService.returnBook(userTemp, bookTemp);
+        List<Author> foundedAuthors = authorService.findByName("Taras");
+        for (Author author: foundedAuthors) {
+            System.out.println("Id = " + author.getAuthorId());
+            System.out.println("First Name = " + author.getName());
+            System.out.println("Last Name = " + author.getSurname());
+            System.out.println();
+        }
+
+        authorService.findByNameAndSurname("Taras", "Shevchenko");
+        bookService.findByTitle(daisyJonesBook.getTitle());
+        rentService.rentBook(userTemp, daisyJonesBook);
+        List<Book> rentedBooks = rentService.getBooksRentByUser(userTemp);
+        for (Book book : rentedBooks) {
+            System.out.println("Id=" + book.getBookId());
+            System.out.println("Name=" + book.getTitle());
+            System.out.println("Year=" + book.getYear());
+            System.out.println("Price=" + book.getPrice());
+            System.out.println();
+        }
+        rentService.returnBook(userTemp, daisyJonesBook);
+        System.out.println("Book was returned:");
+        System.out.println("Id=" + daisyJonesBook.getBookId());
+        System.out.println("Name=" + daisyJonesBook.getTitle());
+        System.out.println("Year=" + daisyJonesBook.getYear());
+        System.out.println("Price=" + daisyJonesBook.getPrice());
+        System.out.println();
         context.close();
     }
 }
