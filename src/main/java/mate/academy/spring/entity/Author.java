@@ -70,4 +70,12 @@ public class Author {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+    @Override
+    public String toString() {
+        return "Author:" +
+                "\nauthorId = " + authorId +
+                "\nname = " + name +
+                "\nsurname = " + surname;
+    }
 }

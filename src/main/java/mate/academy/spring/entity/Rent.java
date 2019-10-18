@@ -22,10 +22,10 @@ public class Rent {
     private Long rentId;
     @Column(name = "rent_date")
     private LocalDate rentDate;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book book;
     @Column(name = "active")
@@ -84,5 +84,15 @@ public class Rent {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "Rent:" +
+                "\nrentId = " + rentId +
+                "\nrentDate = " + rentDate +
+                "\n\nRent " + user +
+                "\n\nRented " + book +
+                "\n\nactive = " + active;
     }
 }

@@ -23,7 +23,8 @@ public class BookDaoImp implements BookDao {
     @Transactional(readOnly = true)
     @Override
     public List<Book> listBooks() {
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book", Book.class);
+        TypedQuery<Book> query = sessionFactory
+                .getCurrentSession().createQuery("FROM Book", Book.class);
         return query.getResultList();
     }
 
@@ -31,7 +32,8 @@ public class BookDaoImp implements BookDao {
     @Override
     public List<Book> findByTitle(String title) {
         TypedQuery<Book> query = sessionFactory
-                .getCurrentSession().createQuery("from Book where title=:title", Book.class);
+                .getCurrentSession()
+                .createQuery("FROM Book WHERE title LIKE CONCAT ('%', :title,'%')", Book.class);
         query.setParameter("title", title);
         return query.getResultList();
     }

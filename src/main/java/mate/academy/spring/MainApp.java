@@ -1,6 +1,7 @@
 package mate.academy.spring;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import mate.academy.spring.config.AppConfig;
 import mate.academy.spring.entity.Author;
@@ -17,67 +18,99 @@ public class MainApp {
     public static void main(String[] args) throws SQLException {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
-
-        AuthorService authorService = context.getBean(AuthorService.class);
-        Author tarasShevchenko = new Author("Taras", "Shevchenko");
-        authorService.add(tarasShevchenko);
-        RentService rentService = context.getBean(RentService.class);
-        rentService.rentBook(new User("Sunil", "Bora", "suni.bora@example.com"),
-                new Book("Inland: A Novel", 2019, 25.6));
-        BookService bookService = context.getBean(BookService.class);
-        Book daisyJonesBook = new Book("Daisy Jones & The Six", 2019, 41.6);
-        bookService.add(daisyJonesBook);
-        bookService.add(new Book("Daisy Jones & The Six", 2019, 35.16));
-        bookService.add(new Book("The Water Cure: A Novel", 2019, 52.26));
-        bookService.add(new Book("My Lovely Wife", 2019, 32.56));
-        User userTemp = new User("Sunil", "Bora", "suni.bora@example.com");
+        User userSunilBora = new User("Sunil", "Bora", "suni.bora@example.com");
+        User userDavidMiller = new User("David", "Miller", "david.miller@example.com");
+        User userSameerSingh = new User("Sameer", "Singh", "sameer.singh@example.com");
+        User userPaulSmith = new User("Paul", "Smith", "paul.smith@example.com");
         UserService userService = context.getBean(UserService.class);
-        userService.add(userTemp);
-        userService.add(new User("David", "Miller", "david.miller@example.com"));
-        userService.add(new User("Sameer", "Singh", "sameer.singh@example.com"));
-        userService.add(new User("Paul", "Smith", "paul.smith@example.com"));
+        userService.add(userSunilBora);
+        userService.add(userDavidMiller);
+        userService.add(userSameerSingh);
+        userService.add(userPaulSmith);
+
+        Book bookDaisyJones = new Book("Daisy Jones", 2019, 41.6);
+        Book bookInlandNovel = new Book("Inland: A Novel", 2019, 25.6);
+        Book bookDaisy = new Book("Daisy & The Six", 2019, 35.16);
+        Book bookWaterCure = new Book("The Water Cure: A Novel", 2019, 52.26);
+        Book bookLovelyWife = new Book("My Lovely Wife", 2019, 32.56);
+        BookService bookService = context.getBean(BookService.class);
+        bookService.add(bookDaisyJones);
+        bookService.add(bookInlandNovel);
+        bookService.add(bookDaisy);
+        bookService.add(bookLovelyWife);
+
+        Author authorTarasShevchenko = new Author("Taras", "Shevchenko");
+        Author authorIvanFranko = new Author("Ivan", "Franko");
+        Author authorLesPodrevlyanskiy = new Author("Les", "Podrevlyanskiy");
+        AuthorService authorService = context.getBean(AuthorService.class);
+        authorService.add(authorTarasShevchenko);
+        authorService.add(authorLesPodrevlyanskiy);
+
+        List<Author> authorList = new ArrayList<>();
+        authorList.add(authorIvanFranko);
+        authorList.add(authorLesPodrevlyanskiy);
+
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(bookLovelyWife);
+        bookList.add(bookWaterCure);
+        bookList.add(bookInlandNovel);
+
+        System.out.println("---authorWithBooks---");
+        authorIvanFranko.setBooks(bookList);
+        System.out.println(authorIvanFranko);
+        for (Book book:authorIvanFranko.getBooks() ) {
+            System.out.println(book);
+        }
+
+        System.out.println("---bookWithAuthors---");
+        bookWaterCure.setAuthors(authorList);
+        System.out.println(bookWaterCure);
+        for (Author author:bookWaterCure.getAuthors() ) {
+            System.out.println(author);
+        }
+
+        bookService.add(bookWaterCure);
+        authorService.add(authorIvanFranko);
+
+        System.out.println("---Rent---");
+        RentService rentService = context.getBean(RentService.class);
+        Rent rentSunilDaisy = rentService.rentBook(userSunilBora, bookDaisy);
+        System.out.println(rentSunilDaisy);
+
+        System.out.println("---rentWhenBookReturned----");
+        Rent rent = rentService.returnBook(userSunilBora, bookDaisyJones);
+        System.out.println(rent);
+
+        System.out.println("---Book---");
         List<Book> books = bookService.listBooks();
         for (Book book : books) {
-            System.out.println("Id=" + book.getBookId());
-            System.out.println("Name=" + book.getTitle());
-            System.out.println("Year=" + book.getYear());
-            System.out.println("Price=" + book.getPrice());
-            System.out.println();
+            System.out.println(book);
+            for (Author author: book.getAuthors()){
+                System.out.println(author);
+            }
         }
+        System.out.println("---User---");
         List<User> users = userService.listUsers();
         for (User user : users) {
-            System.out.println("Id = " + user.getUserId());
-            System.out.println("First Name = " + user.getFirstName());
-            System.out.println("Last Name = " + user.getLastName());
-            System.out.println("Email = " + user.getEmail());
-            System.out.println();
-        }
-        List<Author> foundedAuthors = authorService.findByName("Taras");
-        for (Author author: foundedAuthors) {
-            System.out.println("Id = " + author.getAuthorId());
-            System.out.println("First Name = " + author.getName());
-            System.out.println("Last Name = " + author.getSurname());
-            System.out.println();
+            System.out.println(user);
         }
 
-        authorService.findByNameAndSurname("Taras", "Shevchenko");
-        bookService.findByTitle(daisyJonesBook.getTitle());
-        rentService.rentBook(userTemp, daisyJonesBook);
-        List<Book> rentedBooks = rentService.getBooksRentByUser(userTemp);
-        for (Book book : rentedBooks) {
-            System.out.println("Id=" + book.getBookId());
-            System.out.println("Name=" + book.getTitle());
-            System.out.println("Year=" + book.getYear());
-            System.out.println("Price=" + book.getPrice());
-            System.out.println();
+        System.out.println("---authorFindByName---");
+        List<Author> foundedAuthors = authorService.findByName("ras");
+        for (Author author : foundedAuthors) {
+            System.out.println(author);
+            for (Book book :author.getBooks() ) {
+                System.out.println(book);
+            }
         }
-        rentService.returnBook(userTemp, daisyJonesBook);
-        System.out.println("Book was returned:");
-        System.out.println("Id=" + daisyJonesBook.getBookId());
-        System.out.println("Name=" + daisyJonesBook.getTitle());
-        System.out.println("Year=" + daisyJonesBook.getYear());
-        System.out.println("Price=" + daisyJonesBook.getPrice());
-        System.out.println();
-        context.close();
+
+        System.out.println("---authorFindByNameAndSurname---");
+        authorService.findByNameAndSurname("Tar", "chenko");
+        bookService.findByTitle(bookDaisyJones.getTitle());
+        rentService.rentBook(userSunilBora, bookDaisyJones);
+        List<Book> rentedBooks = rentService.getBooksRentByUser(userSunilBora);
+        for (Book book : rentedBooks) {
+            System.out.println(book);
+        }
     }
 }
