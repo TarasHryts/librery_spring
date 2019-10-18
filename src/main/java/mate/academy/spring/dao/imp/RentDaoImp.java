@@ -23,16 +23,14 @@ public class RentDaoImp implements RentDao {
 
     @Override
     public List<Rent> listRents() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Rent> query = sessionFactory.getCurrentSession().createQuery("from Rent");
+        TypedQuery<Rent> query = sessionFactory.getCurrentSession().createQuery("from Rent", Rent.class);
         return query.getResultList();
     }
 
     @Override
     public void returnBook(User user, Book book) {
-        @SuppressWarnings("unchecked")
         TypedQuery<Rent> query = sessionFactory
-                .getCurrentSession().createQuery("from Rent where user=:user and book=:book");
+                .getCurrentSession().createQuery("from Rent where user=:user and book=:book", Rent.class);
         query.setParameter("user", user);
         query.setParameter("book", book);
         Rent rent = query.getSingleResult();
@@ -42,9 +40,8 @@ public class RentDaoImp implements RentDao {
 
     @Override
     public List<Book> getBooksByUser(User user) {
-        @SuppressWarnings("unchecked")
         TypedQuery<Rent> query = sessionFactory
-                .getCurrentSession().createQuery("from Rent where user=:user");
+                .getCurrentSession().createQuery("from Rent where user=:user", Rent.class);
         query.setParameter("user", user);
         List<Book> books = query.getResultList().stream()
                 .map(x -> x.getBook())

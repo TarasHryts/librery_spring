@@ -23,17 +23,15 @@ public class BookDaoImp implements BookDao {
     @Transactional(readOnly = true)
     @Override
     public List<Book> listBooks() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book");
+        TypedQuery<Book> query = sessionFactory.getCurrentSession().createQuery("from Book", Book.class);
         return query.getResultList();
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Book> findByTitle(String title) {
-        @SuppressWarnings("unchecked")
         TypedQuery<Book> query = sessionFactory
-                .getCurrentSession().createQuery("from Book where title=:title");
+                .getCurrentSession().createQuery("from Book where title=:title", Book.class);
         query.setParameter("title", title);
         return query.getResultList();
     }
