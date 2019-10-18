@@ -85,10 +85,10 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book:" +
-                "\nbookId = " + bookId +
-                "\ntitle = " + title +
-                "\nyear = " + year +
-                "\nprice = " + price;
+        return "Book:"
+                + "\nbookId = " + bookId
+                + "\ntitle = " + title
+                + "\nyear = " + year
+                + "\nprice = " + price;
     }
 }

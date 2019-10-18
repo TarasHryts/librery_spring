@@ -24,7 +24,9 @@ public class RentDaoImp implements RentDao {
 
     @Override
     public List<Rent> listRents() {
-        TypedQuery<Rent> query = sessionFactory.getCurrentSession().createQuery("FROM Rent", Rent.class);
+        TypedQuery<Rent> query = sessionFactory
+                .getCurrentSession()
+                .createQuery("FROM Rent", Rent.class);
         return query.getResultList();
     }
 
@@ -32,8 +34,7 @@ public class RentDaoImp implements RentDao {
     public Rent returnBook(User user, Book book) {
         TypedQuery<Rent> query = sessionFactory
                 .getCurrentSession()
-                .createQuery("FROM Rent WHERE user LIKE CONCAT ('%', :user,'%') " +
-                        "AND book LIKE CONCAT ('%', :book,'%')", Rent.class);
+                .createQuery("FROM Rent WHERE user=:user AND book=:book", Rent.class);
         query.setParameter("user", user);
         query.setParameter("book", book);
         Rent rent = query.getSingleResult();
@@ -46,7 +47,7 @@ public class RentDaoImp implements RentDao {
     public List<Book> getBooksByUser(User user) {
         TypedQuery<Rent> query = sessionFactory
                 .getCurrentSession()
-                .createQuery("FROM Rent WHERE user LIKE CONCAT ('%', :user,'%')", Rent.class);
+                .createQuery("FROM Rent WHERE user=:user", Rent.class);
         query.setParameter("user", user);
         List<Book> books = query.getResultList().stream()
                 .map(x -> x.getBook())

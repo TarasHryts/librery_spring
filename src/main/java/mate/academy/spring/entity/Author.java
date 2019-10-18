@@ -73,9 +73,9 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author:" +
-                "\nauthorId = " + authorId +
-                "\nname = " + name +
-                "\nsurname = " + surname;
+        return "Author:"
+                + "\nauthorId = " + authorId
+                + "\nname = " + name
+                + "\nsurname = " + surname;
     }
 }

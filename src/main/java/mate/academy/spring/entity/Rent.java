@@ -88,11 +88,11 @@ public class Rent {
 
     @Override
     public String toString() {
-        return "Rent:" +
-                "\nrentId = " + rentId +
-                "\nrentDate = " + rentDate +
-                "\n\nRent " + user +
-                "\n\nRented " + book +
-                "\n\nactive = " + active;
+        return "Rent:"
+                + "\nrentId = " + rentId
+                + "\nrentDate = " + rentDate
+                + "\n\nRent " + user
+                + "\n\nRented " + book
+                + "\n\nactive = " + active;
     }
 }

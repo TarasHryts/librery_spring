@@ -73,10 +73,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User:" +
-                "\nuserId = " + userId +
-                "\nfirstName = " + firstName +
-                "\nlastName = " + lastName +
-                "\nemail = " + email;
+        return "User:"
+                + "\nuserId = " + userId
+                + "\nfirstName = " + firstName
+                + "\nlastName = " + lastName
+                + "\nemail = " + email;
     }
 }
