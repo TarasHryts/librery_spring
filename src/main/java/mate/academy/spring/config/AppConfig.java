@@ -2,8 +2,6 @@ package mate.academy.spring.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
-import mate.academy.spring.entity.Book;
-import mate.academy.spring.entity.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,14 +40,12 @@ public class AppConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(getDataSource());
-
         Properties props = new Properties();
         props.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(Book.class, User.class);
+        factoryBean.setPackagesToScan("mate.academy.spring.entity");
         return factoryBean;
     }
 
