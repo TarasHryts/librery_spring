@@ -21,6 +21,12 @@ public class BookServiceImp implements BookService {
 
     @Transactional(readOnly = true)
     @Override
+    public Book get(Long id) {
+        return bookDao.get(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<Book> listBooks() {
         return bookDao.listBooks();
     }
