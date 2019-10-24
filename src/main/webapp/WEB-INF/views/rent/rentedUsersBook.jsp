@@ -1,14 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>All Books</title>
+    <title>rented Books</title>
 </head>
 <body>
-<h1>Hello from All books page</h1>
+<h1>Rented BOOKS</h1>
 <div alighn="center">
-    <h2>Select what you want to buy </h2>
+    <h2>Books rented by user ${user.firstName} ${user.lastName} with id = ${user.userId} </h2>
     <table border="2">
         <tr>
             <th>Info</th>
@@ -27,8 +26,12 @@
                     <a href="${pageContext.request.contextPath}/book/${book.bookId}">details....</a>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/rent/rentBook ?bookId=${book.bookId}">rent</a>
+                    <a href="${pageContext.request.contextPath}/rent/rentBook?bookId=${book.bookId}">rent</a>
                 </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/rent/return?bookId=${book.bookId}">return</a>
+                </td>
+
             </tr>
         </c:forEach>
     </table>

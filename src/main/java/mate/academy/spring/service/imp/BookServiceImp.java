@@ -1,6 +1,7 @@
 package mate.academy.spring.service.imp;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.spring.dao.BookDao;
 import mate.academy.spring.entity.Book;
 import mate.academy.spring.service.BookService;
@@ -21,7 +22,7 @@ public class BookServiceImp implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public Book get(Long id) {
+    public Optional<Book> get(Long id) {
         return bookDao.get(id);
     }
 

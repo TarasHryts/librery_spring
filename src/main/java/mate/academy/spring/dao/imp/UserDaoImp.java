@@ -1,6 +1,7 @@
 package mate.academy.spring.dao.imp;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.TypedQuery;
 import mate.academy.spring.dao.UserDao;
 import mate.academy.spring.entity.User;
@@ -16,6 +17,15 @@ public class UserDaoImp implements UserDao {
     @Override
     public void add(User user) {
         sessionFactory.getCurrentSession().save(user);
+    }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        TypedQuery<User> query = sessionFactory
+                .getCurrentSession()
+                .createQuery("FROM User WHERE userId=:userId", User.class);
+        query.setParameter("userId", id);
+        return Optional.of(query.getSingleResult());
     }
 
     @Override

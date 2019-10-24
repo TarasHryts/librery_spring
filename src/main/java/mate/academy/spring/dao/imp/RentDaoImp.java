@@ -1,13 +1,13 @@
 package mate.academy.spring.dao.imp;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.TypedQuery;
 import mate.academy.spring.dao.RentDao;
 import mate.academy.spring.entity.Book;
 import mate.academy.spring.entity.Rent;
 import mate.academy.spring.entity.User;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,10 +34,11 @@ public class RentDaoImp implements RentDao {
     public Rent returnBook(User user, Book book) {
         TypedQuery<Rent> query = sessionFactory
                 .getCurrentSession()
-                .createQuery("FROM Rent WHERE user=:user AND book=:book", Rent.class);
+                .createQuery("FROM Rent WHERE user=:user AND book=:book AND active=:active", Rent.class);
         query.setParameter("user", user);
         query.setParameter("book", book);
-        Rent rent = query.getSingleResult();
+        query.setParameter("active", true);
+        Rent rent = query.getResultList().stream().findFirst().get();
         rent.setActive(false);
         sessionFactory.getCurrentSession().update(rent);
         return rent;
@@ -45,13 +46,12 @@ public class RentDaoImp implements RentDao {
 
     @Override
     public List<Book> getBooksByUser(User user) {
-        TypedQuery<Rent> query = sessionFactory
+        Query<Book> query = sessionFactory
                 .getCurrentSession()
-                .createQuery("FROM Rent WHERE user=:user", Rent.class);
+                .createQuery("SELECT rent.book FROM Rent rent WHERE rent.user=:user and rent.active=:active", Book.class);
         query.setParameter("user", user);
-        List<Book> books = query.getResultList().stream()
-                .map(x -> x.getBook())
-                .collect(Collectors.toList());
+        query.setParameter("active", true);
+        List<Book> books = query.getResultList();
         return books;
     }
 }

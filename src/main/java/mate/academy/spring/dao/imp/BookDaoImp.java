@@ -1,6 +1,7 @@
 package mate.academy.spring.dao.imp;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.TypedQuery;
 import mate.academy.spring.dao.BookDao;
 import mate.academy.spring.entity.Book;
@@ -22,12 +23,12 @@ public class BookDaoImp implements BookDao {
 
     @Transactional(readOnly = true)
     @Override
-    public Book get(Long id) {
+    public Optional<Book> get(Long id) {
         TypedQuery<Book> query = sessionFactory
                 .getCurrentSession()
                 .createQuery("FROM Book WHERE bookId=:bookId", Book.class);
         query.setParameter("bookId", id);
-        return query.getSingleResult();
+        return Optional.of(query.getSingleResult());
     }
 
     @Transactional(readOnly = true)

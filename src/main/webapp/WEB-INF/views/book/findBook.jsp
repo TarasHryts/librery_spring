@@ -1,4 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>find book</title>
+</head>
+<body>
+<h1>find book</h1>
+</body>
+</html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
@@ -9,6 +18,21 @@
 <h1>Hello from All books page</h1>
 <div alighn="center">
     <h2>Select what you want to buy </h2>
+    <form action="${pageContext.request.contextPath}/book/add" method="post">
+        <table>
+            <tr>
+                <td>Book title:</td>
+                <td><input value="${title}" name="title"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Confirm</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
     <table border="2">
         <tr>
             <th>Info</th>
@@ -25,9 +49,6 @@
                 <td>${book.price}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/book/${book.bookId}">details....</a>
-                </td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/rent/rentBook ?bookId=${book.bookId}">rent</a>
                 </td>
             </tr>
         </c:forEach>
