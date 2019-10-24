@@ -5,6 +5,7 @@
     <title>rented Books</title>
 </head>
 <body>
+<jsp:include page="../header.jsp"/>
 <h1>Rented BOOKS</h1>
 <div alighn="center">
     <h2>Books rented by user ${user.firstName} ${user.lastName} with id = ${user.userId} </h2>
