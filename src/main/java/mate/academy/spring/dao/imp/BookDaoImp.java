@@ -24,11 +24,7 @@ public class BookDaoImp implements BookDao {
     @Transactional(readOnly = true)
     @Override
     public Optional<Book> get(Long id) {
-        TypedQuery<Book> query = sessionFactory
-                .getCurrentSession()
-                .createQuery("FROM Book WHERE bookId=:bookId", Book.class);
-        query.setParameter("bookId", id);
-        return Optional.of(query.getSingleResult());
+        return  Optional.ofNullable(sessionFactory.getCurrentSession().get(Book.class, id));
     }
 
     @Transactional(readOnly = true)

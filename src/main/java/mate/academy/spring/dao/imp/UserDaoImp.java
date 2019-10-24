@@ -21,11 +21,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public Optional<User> getUserById(Long id) {
-        TypedQuery<User> query = sessionFactory
-                .getCurrentSession()
-                .createQuery("FROM User WHERE userId=:userId", User.class);
-        query.setParameter("userId", id);
-        return Optional.of(query.getSingleResult());
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(User.class, id));
     }
 
     @Override
