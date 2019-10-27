@@ -6,11 +6,9 @@ import java.util.List;
 import mate.academy.spring.config.AppConfig;
 import mate.academy.spring.entity.Author;
 import mate.academy.spring.entity.Book;
-import mate.academy.spring.entity.Rent;
 import mate.academy.spring.entity.User;
 import mate.academy.spring.service.AuthorService;
 import mate.academy.spring.service.BookService;
-import mate.academy.spring.service.RentService;
 import mate.academy.spring.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -67,46 +65,6 @@ public class MainApp {
         System.out.println(bookWaterCure);
         for (Author author : bookWaterCure.getAuthors()) {
             System.out.println(author);
-        }
-
-        System.out.println("---Rent---");
-        RentService rentService = context.getBean(RentService.class);
-        Rent rentSunilDaisy = rentService.rentBook(userSunilBora, bookDaisyJones);
-        System.out.println(rentSunilDaisy);
-
-        System.out.println("---rentWhenBookReturned----");
-        Rent rent = rentService.returnBook(userSunilBora, bookDaisyJones);
-        System.out.println(rent);
-        System.out.println("---Book---");
-        List<Book> books = bookService.listBooks();
-        for (Book book : books) {
-            System.out.println(book);
-            for (Author author : book.getAuthors()) {
-                System.out.println(author);
-            }
-        }
-        System.out.println("---User---");
-        List<User> users = userService.listUsers();
-        for (User user : users) {
-            System.out.println(user);
-        }
-
-        System.out.println("---authorFindByName---");
-        List<Author> foundedAuthors = authorService.findByName("ras");
-        for (Author author : foundedAuthors) {
-            System.out.println(author);
-            for (Book book : author.getBooks()) {
-                System.out.println(book);
-            }
-        }
-
-        System.out.println("---authorFindByNameAndSurname---");
-        authorService.findByNameAndSurname("Tar", "chenko");
-        bookService.findByTitle(bookDaisyJones.getTitle());
-        rentService.rentBook(userSunilBora, bookDaisyJones);
-        List<Book> rentedBooks = rentService.getBooksRentByUser(userSunilBora);
-        for (Book book : rentedBooks) {
-            System.out.println(book);
         }
     }
 }

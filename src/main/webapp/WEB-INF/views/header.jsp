@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Index</title>
+    <title>Title</title>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/book/all">info</a><br>
-<a href="${pageContext.request.contextPath}/book/add">add book</a><br>
+<a href="${pageContext.request.contextPath}/book/all">info</a>
+<a href="${pageContext.request.contextPath}/book/add">add book</a>
 <form action="${pageContext.request.contextPath}/book/find" method="get">
     <td>Book title:</td>
     <td><input value="${title}" name="title"/></td>
