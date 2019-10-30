@@ -18,7 +18,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public Optional<User> add(User user) {
         sessionFactory.getCurrentSession().save(user);
-        return findUserByEmail(user.getEmail());
+        return Optional.ofNullable(user);
     }
 
     @Override
