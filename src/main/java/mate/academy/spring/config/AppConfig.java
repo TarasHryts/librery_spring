@@ -19,7 +19,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("mate.academy.spring.dao"),
-        @ComponentScan("mate.academy.spring.service")
+        @ComponentScan("mate.academy.spring.service"),
+        @ComponentScan("mate.academy.spring.security"),
+        @ComponentScan("mate.academy.spring.dao.imp"),
+        @ComponentScan("mate.academy.spring.service.imp")
+
 })
 public class AppConfig {
 
