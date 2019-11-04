@@ -18,14 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/book")
 public class BookController {
+
     @Autowired
     private BookService bookService;
-
-    @PostMapping
-    public String addBook(@ModelAttribute Book book) {
-        bookService.add(book);
-        return "forward: /book/all";
-    }
 
     @GetMapping("/all")
     public String getAllBooks(ModelMap model) {
@@ -61,5 +56,4 @@ public class BookController {
         bookService.add(book);
         return getAllBooks(model);
     }
-
 }

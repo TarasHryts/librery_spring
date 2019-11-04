@@ -34,7 +34,8 @@ public class RentDaoImp implements RentDao {
     public Rent returnBook(User user, Book book) {
         TypedQuery<Rent> query = sessionFactory
                 .getCurrentSession()
-                .createQuery("FROM Rent WHERE user=:user AND book=:book AND active=:active", Rent.class);
+                .createQuery("FROM Rent WHERE user=:user AND book=:book AND active=:active",
+                        Rent.class);
         query.setParameter("user", user);
         query.setParameter("book", book);
         query.setParameter("active", true);
@@ -48,7 +49,8 @@ public class RentDaoImp implements RentDao {
     public List<Book> getBooksByUser(User user) {
         Query<Book> query = sessionFactory
                 .getCurrentSession()
-                .createQuery("SELECT rent.book FROM Rent rent WHERE rent.user=:user and rent.active=:active", Book.class);
+                .createQuery("SELECT rent.book FROM Rent rent "
+                        + "WHERE rent.user=:user and rent.active=:active", Book.class);
         query.setParameter("user", user);
         query.setParameter("active", true);
         List<Book> books = query.getResultList();
