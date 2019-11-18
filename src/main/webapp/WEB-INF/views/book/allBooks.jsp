@@ -6,7 +6,7 @@
     <title>All Books</title>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="../header.jsp"/>
 <h1>Hello from All books page</h1>
 <div alighn="center">
     <h2>Select what you want to buy </h2>

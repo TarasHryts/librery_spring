@@ -1,12 +1,10 @@
 package mate.academy.spring.service.imp;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import mate.academy.spring.dao.UserDao;
 import mate.academy.spring.dto.UserDto;
-import mate.academy.spring.entity.Role;
+import mate.academy.spring.dto.UserDtoUtil;
 import mate.academy.spring.entity.User;
 import mate.academy.spring.exception.EmailExistsException;
 import mate.academy.spring.service.UserService;
@@ -54,14 +52,8 @@ public class UserServiceImp implements UserService {
             throw new EmailExistsException("There is an account with that email address: "
                     + accountDto.getEmail());
         } else {
-            User user = new User();
-            user.setEmail(accountDto.getEmail());
-            user.setFirstName(accountDto.getFirstName());
-            user.setLastName(accountDto.getLastName());
+            User user = UserDtoUtil.creteUserFromDto(accountDto);
             user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-            Set<Role> roles = new HashSet<>();
-            roles.add(new Role("USER"));
-            user.setRoles(roles);
             return userDao.add(user);
         }
     }
