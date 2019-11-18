@@ -6,7 +6,7 @@
     <title>${book.title}</title>
  </head>
  <body>
- <jsp:include page="header.jsp"/>
+ <jsp:include page="../header.jsp"/>
  <h2>${book.title}</h2><br/>
   <b>Publication date: </b>${book.year} <br/>
     <c:forEach var="author" items="${book.authors}">

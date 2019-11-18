@@ -25,14 +25,14 @@ public class BookController {
     @GetMapping("/all")
     public String getAllBooks(ModelMap model) {
         model.put("allBooks", bookService.listBooks());
-        return "allBooks";
+        return "book/allBooks";
     }
 
     @GetMapping("/find")
     public String findByTitle(@RequestParam("title") String title, Model model) {
         List<Book> books = bookService.findByTitle(title);
         model.addAttribute("allBooks", books);
-        return "allBooks";
+        return "book/allBooks";
     }
 
     @GetMapping("/{bookId}")
@@ -43,7 +43,7 @@ public class BookController {
         } else {
             model.addAttribute("book", book.get());
         }
-        return "bookInfo";
+        return "book/bookInfo";
     }
 
     @GetMapping("/add")
